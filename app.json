@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "shjp-mobile",
+    "description": "Sacred Heart of Jesus Parish Youth Mobile Application",
+    "slug": "shjp-mobile",
+    "privacy": "public",
+    "sdkVersion": "31.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shjp.shjp"
+    },
+    "android": {
+      "package": "com.shjp.shjp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBN3DRmVWa8kXOR_OF7y0rY_ldfWOSpicA"
+        }
+      }
+    }
+  }
+}
