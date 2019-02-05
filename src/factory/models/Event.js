@@ -38,7 +38,7 @@ const Event = {
     },
     {
       key: 'location_description',
-      label: 'Event Location',
+      label: 'Event Location Description',
       type: 'longtext',
       errorKey: 'locationDescriptionError'
     }

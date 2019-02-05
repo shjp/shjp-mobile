@@ -3,14 +3,14 @@ import { LOCAL_URL, DEV_URL } from 'react-native-dotenv';
 
 const URL = DEV_URL;
 
-export const post = async (path, payload) => {
+export const post = async (path, payload, headers) => {
   try {
     const resp = await fetch(`${URL}/${path}`, {
       method: 'POST',
-      headers: {
+      headers: Object.assign({
         'Content-type': 'application/json',
         'Accept': 'application/json'
-      },
+      }, headers),
       mode: 'cors',
       body: JSON.stringify(payload)
     });
@@ -22,15 +22,15 @@ export const post = async (path, payload) => {
   }
 };
 
-export const get = async (path, params) => {
+export const get = async (path, params, headers) => {
   const url = formatQueryParams(`${URL}/${path}`, params);
   try {
     const resp = await fetch(url, {
       method: 'GET',
-      headers: {
+      headers: Object.assign({
         'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'Accept': 'application/json'
-      },
+      }, headers),
       mode: 'cors',
       cache: 'default'
     });
@@ -47,7 +47,7 @@ const formatQueryParams = (url, queryParams) => {
   const applicableParams = omitBy(queryParams, isNil);
 
   // Stringify the query params
-  let queryString = map(applicableParams, (val, key) => `${key}=${val.replace(/\s/g, '')}`)
+  let queryString = map(applicableParams, (val, key) => `${key}=${val.replace(/\s/g, ' ')}`)
     .join('&');
 
   return isEmpty(queryString) ? url : `${url}?${queryString}`;

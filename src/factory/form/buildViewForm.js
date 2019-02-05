@@ -32,7 +32,9 @@ const buildViewForm = model => {
       componentDidMount() {
         const id = this.props.navigation.getParam('id', null);
         if (!id) {
-          console.error('id is null in view form!');
+          if (this.props.current) {
+            this.setState(this.props.current);
+          }
           return;
         }
         this.props.get(id)

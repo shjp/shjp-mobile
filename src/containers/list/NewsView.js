@@ -4,7 +4,7 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableHighlight
+  TouchableOpacity
 } from 'react-native';
 
 import { getAnnouncements } from '../../actions/announcement';
@@ -59,9 +59,9 @@ class NewsView extends Component {
       <ScrollView>
       {
         this.news.map((n, i) =>
-          <TouchableHighlight onPress={() => this.navigateToNews(n)} key={i}>
+          <TouchableOpacity onPress={() => this.navigateToNews(n)} key={i}>
             <NewsCard {...n}/>
-          </TouchableHighlight>)
+          </TouchableOpacity>)
       }
       </ScrollView>
     )

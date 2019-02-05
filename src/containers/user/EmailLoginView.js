@@ -11,13 +11,16 @@ import {
 import {
   Icon
 } from 'react-native-elements'
-import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import { isNil } from 'lodash';
+import { isEmpty } from 'lodash';
 
-import { clearRegisterForm, emailRegister, updateRegisterForm } from '../../actions/me';
+import { emailLogin, getMe } from '../../actions/me';
+import {
+  errorLoginEmailRequired,
+  errorLoginPasswordRequired
+} from '../../configs/errors';
 
-class RegisterHelperView extends Component {
+class EmailLoginView extends Component {
 
   static navigationOptions = () => ({
     header: null
@@ -27,81 +30,97 @@ class RegisterHelperView extends Component {
     super(props);
 
     this.state = {
-      birthdayPickerVisible: false,
-      feastdayPickerVisible: false,
+      email: '',
+      emailError: '',
+      password: '',
+      passwordError: ''
     };
   }
 
-  formatDate = date => !date ? 'Pick a date' : `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+  componentWillReceiveProps(props) {
+    if (props.me) {
+      this.props.navigation.navigate('ProfileView');
+    }
+  }
 
-  isFormEmpty = () =>
-    !this.props.baptismalName
-    && !this.props.birthday
-    && !this.props.feastday;
-
-  onBirthdayPicked = birthday => {
-    this.props.updateRegisterForm({ birthday });
-    this.setState(() => ({ birthdayPickerVisible: false }));
+  login = () => {
+    this.validate()
+      .then(valid => {
+        if (valid) {
+          return this.props.emailLogin(this.state.email, this.state.password);
+        }
+        return Promise.reject();
+      })
+      .then(() => {
+        if (this.props.accessToken) {
+          return this.props.getMe();
+        }
+      });
   };
 
-  onFeastdayPicked = feastday => {
-    this.props.updateRegisterForm({ feastday});
-    this.setState(() => ({ feastdayPickerVisible: false }));
+  back = () => {
+    this.setState(state => ({
+      email: '',
+      emailError: '',
+      password: '',
+      passwordError: ''
+    }))
+    this.props.navigation.goBack();
   };
 
-  back = () => this.props.navigation.goBack();
-
-  submit = () => {
-    this.props.emailRegister().then(() => {
-      this.props.clearRegisterForm();
+  validate = () => {
+    return new Promise(resolve => {
+      const emailError = isEmpty(this.state.email) ? errorLoginEmailRequired : '';
+      const passwordError = isEmpty(this.state.password) ? errorLoginPasswordRequired : '';
+      this.setState({
+        emailError,
+        passwordError
+      });
+      return resolve(!emailError && !passwordError);
     });
   };
 
   render() {
-    const { baptismalName, birthday, feastday } = this.props;
+    const { email, password } = this.state;
     return (
       <View style={styles.page}>
         <ScrollView contentContainerStyle={styles.formContainer}>
           <View style={styles.form}>
+            <Icon
+              containerStyle={styles.formIcon}
+              type='font-awesome'
+              name='envelope'
+              color='#fff'/>
             <TextInput
               style={styles.formText}
               underlineColorAndroid="transparent"
-              placeholder='Baptismal name (optional)'
-              value={baptismalName}
-              onChangeText={baptismalName => this.props.updateRegisterForm({ baptismalName })}/>
+              keyboardType='email-address'
+              placeholder='E-mail'
+              value={email}
+              onChangeText={email => this.setState(state => ({ email }))}/>
           </View>
-          <TouchableHighlight onPress={() => this.setState(() => ({ birthdayPickerVisible: true }))}>
-            <View style={styles.form}>
-              <Text style={birthday ? styles.formText : styles.formPlaceholderText}>
-                {
-                  birthday ?
-                    ` Birthday: ${this.formatDate(birthday)}`
-                  :
-                    'Pick your birthday (optional)'
-                }
-              </Text>
-              <DateTimePicker
-                isVisible={this.state.birthdayPickerVisible}
-                onConfirm={this.onBirthdayPicked}
-                onCancel={() => this.setState(() => ({ birthdayPickerVisible: false }))}/>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.setState(() => ({ feastdayPickerVisible: true }))}>
-            <View style={styles.form}>
-              <Text style={this.state.feastday ? styles.formText : styles.formPlaceholderText}>
-                {
-                  feastday ?
-                    ` Feast Day: ${this.formatDate(feastday)}`
-                  :
-                    'Pick your feast day (optional)'
-                }
-              </Text>
-              <DateTimePicker
-                isVisible={this.state.feastdayPickerVisible}
-                onConfirm={this.onFeastdayPicked}
-                onCancel={() => this.setState(() => ({ feastdayPickerVisible: false }))}/>
-            </View>
-          </TouchableHighlight>
+          <Text style={styles.formError}>
+            { this.state.emailError }
+          </Text>
+          <View style={styles.form}>
+            <Icon
+              containerStyle={styles.formIcon}
+              underlineColorAndroid="transparent"
+              type='font-awesome'
+              name='lock'
+              color='#fff'/>
+            <TextInput
+              style={styles.formText}
+              underlineColorAndroid="transparent"
+              placeholder='Password'
+              textContentType='password'
+              secureTextEntry={true}
+              value={password}
+              onChangeText={password => this.setState(state => ({ password }))}/>
+          </View>
+          <Text style={styles.formError}>
+            { this.state.passwordError }
+          </Text>
         </ScrollView>
         <View style={styles.buttonsContainer}>
           <TouchableHighlight
@@ -123,9 +142,9 @@ class RegisterHelperView extends Component {
             style={styles.navigationButton}
             activeOpacity={0.7}
             underlayColor='#222'
-            onPress={this.submit}>
+            onPress={this.login}>
             <View style={styles.navigationButtonContent}>
-              <Text style={styles.navigationText}>{ this.isFormEmpty() ? 'Skip for now' : 'Register' }</Text>
+              <Text style={styles.navigationText}>Log in</Text>
               <Icon
                 containerStyle={styles.navigationIcon}
                 type='font-awesome'
@@ -139,7 +158,6 @@ class RegisterHelperView extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   page: {
@@ -155,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   form: {
-    width: 320,
+    width: 300,
     height: 72,
     display: 'flex',
     flexDirection: 'row',
@@ -175,12 +193,6 @@ const styles = StyleSheet.create({
   formText: {
     flex: 1,
     color: '#fff',
-    fontSize: 20,
-    margin: 10
-  },
-  formPlaceholderText: {
-    flex: 1,
-    color: '#ccc',
     fontSize: 20,
     margin: 10
   },
@@ -215,9 +227,12 @@ const styles = StyleSheet.create({
     marginBottom: -2,
     marginHorizontal: 10
   },
+  formError: {
+    color: '#f00'
+  }
 })
 
 export default connect(
-  state => ({ ...state.signup }),
-  { clearRegisterForm, emailRegister, updateRegisterForm }
-)(RegisterHelperView);
+  state => ({ me: state.user.me, accessToken: state.user.accessToken }),
+  { emailLogin, getMe }
+)(EmailLoginView);

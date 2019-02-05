@@ -4,7 +4,7 @@ import {
   Image,
   ScrollView,
   Text,
-  TouchableHighlight
+  TouchableOpacity
 } from 'react-native';
 
 import { getGroups } from '../../actions/group';
@@ -43,12 +43,12 @@ class GroupsView extends Component {
       <ScrollView>
       {
         this.props.groups.map((group, i) =>
-          <TouchableHighlight onPress={() => this.navigateToGroup(group.id)} key={i}>
+          <TouchableOpacity onPress={() => this.navigateToGroup(group.id)} key={i}>
             <GroupCard
               name={group.name}
               description={group.description}
               imageUrl={group.image_url || ''} />
-          </TouchableHighlight>)
+          </TouchableOpacity>)
       }
       </ScrollView>
     )

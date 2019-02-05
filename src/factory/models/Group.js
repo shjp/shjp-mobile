@@ -5,7 +5,7 @@ import {
   getGroups
 } from '../../actions/group';
 import * as mode from '../modes';
-;
+
 const Group = {
   key: 'group',
   label: 'Group',

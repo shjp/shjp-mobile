@@ -14,9 +14,10 @@ import {
 
 import { isEmpty } from 'lodash';
 
-import { clearRegisterForm, updateRegisterForm } from '../../actions/signup';
+import { clearRegisterForm, updateRegisterForm } from '../../actions/me';
 import {
   errorRegistrationEmailRequired,
+  errorRegistrationNameRequired,
   errorRegistrationPasswordRequired
 } from '../../configs/errors';
 
@@ -30,6 +31,7 @@ class EmailRegisterView extends Component {
     super(props);
 
     this.state = {
+      nameError: '',
       emailError: '',
       passwordError: ''
     };
@@ -50,21 +52,36 @@ class EmailRegisterView extends Component {
 
   validate = () => {
     return new Promise(resolve => {
+      const nameError = isEmpty(this.props.name) ? errorRegistrationNameRequired : '';
       const emailError = isEmpty(this.props.email) ? errorRegistrationEmailRequired : '';
       const passwordError = isEmpty(this.props.password) ? errorRegistrationPasswordRequired : '';
       this.setState({
+        nameError,
         emailError,
         passwordError
       });
-      return resolve(!emailError && !passwordError);
+      return resolve(!nameError && !emailError && !passwordError);
     });
   };
 
   render() {
-    const { email, password } = this.props;
+    const { email, name, password } = this.props;
     return (
       <View style={styles.page}>
         <ScrollView contentContainerStyle={styles.formContainer}>
+          <View style={styles.form}>
+            <Icon
+              containerStyle={styles.formIcon}
+              type='font-awesome'
+              name='user'
+              color='#fff'/>
+            <TextInput
+              style={styles.formText}
+              underlineColorAndroid="transparent"
+              placeholder='Name'
+              value={name}
+              onChangeText={name => this.props.updateRegisterForm({ name })}/>
+          </View>
           <View style={styles.form}>
             <Icon
               containerStyle={styles.formIcon}
@@ -106,7 +123,7 @@ class EmailRegisterView extends Component {
           <TouchableHighlight
             style={styles.navigationButton}
             activeOpacity={0.7}
-            underlayColor='#dd88dd'
+            underlayColor='#222'
             onPress={this.back}>
             <View style={styles.navigationButtonContent}>
               <Icon
@@ -121,7 +138,7 @@ class EmailRegisterView extends Component {
           <TouchableHighlight
             style={styles.navigationButton}
             activeOpacity={0.7}
-            underlayColor='#dd88dd'
+            underlayColor='#222'
             onPress={this.next}>
             <View style={styles.navigationButtonContent}>
               <Text style={styles.navigationText}>Next</Text>
@@ -141,7 +158,7 @@ class EmailRegisterView extends Component {
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: '#bb55bb',
+    backgroundColor: '#222',
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
@@ -190,7 +207,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#aa44aa',
+    backgroundColor: '#000',
   },
   navigationButtonContent: {
     display: 'flex',

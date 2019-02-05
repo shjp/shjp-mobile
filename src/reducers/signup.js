@@ -1,9 +1,10 @@
 import {
   CLEAR_REGISTER_FORM,
   UPDATE_REGISTER_FORM
-} from '../actions/signup';
+} from '../actions/me';
 
 const getDefaultState = () => ({
+  name: '',
   email: '',
   password: '',
   baptismalName: '',

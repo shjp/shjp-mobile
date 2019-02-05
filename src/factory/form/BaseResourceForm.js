@@ -39,6 +39,9 @@ export default class BaseResourceForm extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 8
+    padding: 8,
+    marginHorizontal: 0,
+    top: 0,
+    bottom: 0
   },
 });

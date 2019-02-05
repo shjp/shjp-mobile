@@ -12,6 +12,7 @@ import {
   NewsView
 } from '../list';
 import LoginView from '../user/LoginView';
+import EmailLoginView from '../user/EmailLoginView';
 import EmailRegisterView from '../user/EmailRegisterView';
 import RegisterHelperView from '../user/RegisterHelperView';
 
@@ -19,7 +20,9 @@ import * as FormFactory from '../../factory/form';
 import {
   Announcement,
   Event,
-  Group
+  Group,
+  User,
+  Me
 } from '../../factory/models';
 
 const AppNavigator = createMaterialBottomTabNavigator({
@@ -55,8 +58,10 @@ const AppNavigator = createMaterialBottomTabNavigator({
   User: {
     screen: createStackNavigator({
       LoginView,
+      EmailLoginView,
       EmailRegisterView,
       RegisterHelperView,
+      ProfileView: FormFactory.viewForm(Me),
     }, {
       initialRouteName: 'LoginView'
     }),
