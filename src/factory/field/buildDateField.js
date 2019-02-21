@@ -7,14 +7,16 @@ import {
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import moment from 'moment';
 
-import buildEntryField from './buildEntryField';
 import * as Mode from '../modes';
 
-const buildListField = (mode, field, state, update) => {
+const formatDate = date => {
+  return moment(date).format('ddd, MMM Do YYYY, hh:mm a');
+}
+
+const buildDateField = (mode, field, state, update) => {
   if (!state[field.key]) {
     return null;
   }
-  const data = state[field.key];
   return (
     <View key={field.key} style={styles.container}>
       {
@@ -26,14 +28,9 @@ const buildListField = (mode, field, state, update) => {
             case Mode.FORM_VIEW:
               return (
                 <View>
-                  <Text style={styles.label}>
-                    { field.label }
+                  <Text style={styles.text}>
+                    When: {formatDate(state[field.key])}
                   </Text>
-                  {
-                    data
-                      .filter(field.filter)
-                      .map((dataEntry, index) => buildEntryField(field.model, dataEntry, index))
-                  }
                 </View>
               );
           }
@@ -44,11 +41,10 @@ const buildListField = (mode, field, state, update) => {
 };
 
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#000'
+  text: {
+    fontSize: 12,
+    marginLeft: 10
   }
 });
 
-export default buildListField;
+export default buildDateField;

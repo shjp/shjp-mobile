@@ -44,6 +44,10 @@ const buildViewForm = model => {
           });
       }
 
+      componentWillReceiveProps(newProps) {
+        this.setState(newProps.current);
+      } 
+
       getSubmitComponent() {
         return null;
       }

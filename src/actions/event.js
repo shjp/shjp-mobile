@@ -38,6 +38,7 @@ export const getEventDetails = (id) => {
       ) {
         id,
         name,
+        date,
         description,
         length,
         deadline,

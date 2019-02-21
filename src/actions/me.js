@@ -46,6 +46,12 @@ export const getMe = () => (
         baptismalName
         birthday
         feastday
+        groups {
+          name
+          privilege
+          status
+          role_name
+        }
       }
     `, accessToken)
     .then(res => {

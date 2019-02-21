@@ -6,6 +6,7 @@ import {
 
 import configureStore from './src/store/configure-store';
 import AppNavigator from './src/containers/navigation/AppNavigator';
+import GlobalUIWatchdog from './src/containers/common/GlobalUIWatchdog';
 
 const store = configureStore();
 
@@ -13,7 +14,10 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppNavigator />
+        <>
+          <AppNavigator />
+          <GlobalUIWatchdog />
+        </>
       </Provider>
     );
   }

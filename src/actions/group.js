@@ -6,8 +6,8 @@ export const GET_GROUPS = "GET_GROUPS";
 export const CREATE_GROUP = "CREATE_GROUP";
 
 // Actions
-export const getGroups = () =>
-  dispatch =>
+export const getGroups = () => (
+  dispatch => (
     query(`
       groups {
         id,
@@ -15,43 +15,57 @@ export const getGroups = () =>
         description,
         image_url
       }`
-    ).then(res =>
+    )
+    .then(res =>
       dispatch({
         type: GET_GROUPS,
         groups: res.data.groups
       })
-    ).catch(e =>
+    )
+    .catch(e =>
       dispatch({
         type: GET_GROUPS,
         error: e
-      }));
+      })
+    )
+  )
+);
 
-export const getGroupDetails = (id) =>
-  dispatch =>
+export const getGroupDetails = (id) => (
+  dispatch => (
     query(`
       group(
         id: "${id}"
       ) {
+        id,
         name,
         description,
         image_url,
         members {
+          id
           name
+          status
+          role_name
+          privilege
         }
       }`
-    ).then(res =>
+    )
+    .then(res =>
       dispatch({
         type: GET_GROUP,
         group: res.data.group
       })
-    ).catch(e =>
+    )
+    .catch(e =>
       dispatch({
         type: GET_GROUP,
         error: e
-      }));
+      })
+    )
+  )
+);
 
 export const createGroup = ({ name, description, imageData }) => {
-  console.log('name:', name, 'desc:', description);
   return dispatch =>
     mutate(`
       createGroup(
@@ -61,7 +75,6 @@ export const createGroup = ({ name, description, imageData }) => {
         ref_id
       }`
     ).then(res => {
-      console.log('createGroup:res = ', JSON.stringify(res, null, 2));
       if (res.errors && res.errors.length) {
         return Promise.reject(res.errors);
       }
@@ -79,3 +92,22 @@ export const createGroup = ({ name, description, imageData }) => {
 
 export const editGroup = ({ name, description, imageData }) =>
   console.error('editGroup not implemented yet');
+
+export const changeGroupMembership = ({ groupId, userId, roleId, status }) => {
+  return dispatch =>
+    mutate(`
+      requestGroupJoin(
+        group_id: "${groupId}"
+        user_id: "${userId}"
+        role_id: "${roleId}"
+        status: "${status}"
+      ) {
+        ref_id
+      }
+    `)
+    .then(res => {
+      if (res.errors && res.errors.length) {
+        return Promise.reject(res.errors);
+      }
+    });
+}

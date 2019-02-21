@@ -25,6 +25,11 @@ const Event = {
       errorKey: 'nameError'
     },
     {
+      key: 'date',
+      label: 'Event Date',
+      type: 'date',
+    },
+    {
       key: 'description',
       label: 'Event Description',
       type: 'longtext',

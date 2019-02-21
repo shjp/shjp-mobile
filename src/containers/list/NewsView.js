@@ -59,7 +59,7 @@ class NewsView extends Component {
       <ScrollView>
       {
         this.news.map((n, i) =>
-          <TouchableOpacity onPress={() => this.navigateToNews(n)} key={i}>
+          <TouchableOpacity onPress={() => this.navigateToNews(n)} key={i} activeOpacity={0.6}>
             <NewsCard {...n}/>
           </TouchableOpacity>)
       }

@@ -5,6 +5,7 @@ import event from './event';
 import group from './group';
 import user from './user';
 import signup from './signup';
+import ui from './ui';
 
 const rootReducer = combineReducers({
   announcement,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   group,
   user,
   signup,
+  ui,
 });
 
 export default rootReducer;

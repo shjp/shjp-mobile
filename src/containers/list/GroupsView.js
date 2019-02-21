@@ -43,7 +43,7 @@ class GroupsView extends Component {
       <ScrollView>
       {
         this.props.groups.map((group, i) =>
-          <TouchableOpacity onPress={() => this.navigateToGroup(group.id)} key={i}>
+          <TouchableOpacity onPress={() => this.navigateToGroup(group.id)} key={i} activeOpacity={0.6}>
             <GroupCard
               name={group.name}
               description={group.description}

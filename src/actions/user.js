@@ -33,6 +33,7 @@ export const getUserDetails = (id) =>
       user(
         id: "${id}"
       ) {
+        id
         name
         email
         baptismalName

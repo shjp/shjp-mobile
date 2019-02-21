@@ -31,6 +31,7 @@ export const getAnnouncementDetails = (id) =>
       announcement(
         id: "${id}"
       ) {
+        id,
         name,
         content,
         creator {
