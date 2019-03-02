@@ -8,6 +8,7 @@ import buildMembershipField from './buildMembershipField';
 import buildJoinField from './buildJoinField';
 import buildRolePillField from './buildRolePillField';
 import buildShortText from './buildShortText';
+import buildAuthorField from './buildAuthorField';
 
 const buildField = (mode, field, state, update) => {
   switch (field.type) {
@@ -21,6 +22,7 @@ const buildField = (mode, field, state, update) => {
     case 'membership':   return buildMembershipField(mode, field, state, update);
     case 'join':         return buildJoinField(mode, field, state, update);
     case 'role-pill':    return buildRolePillField(mode, field, state, update);
+    case 'author':       return buildAuthorField(mode, field, state, update);
   }
 };
 

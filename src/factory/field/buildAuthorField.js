@@ -9,12 +9,9 @@ import moment from 'moment';
 
 import * as Mode from '../modes';
 
-const formatDate = date => {
-  return moment(date).format('ddd, MMM Do YYYY, hh:mm a');
-}
-
-const buildDateField = (mode, field, state, update) => {
-  if (!state[field.key]) {
+const buildAuthorField = (mode, field, state, update) => {
+  const author = state[field.key];
+  if (!author) {
     return null;
   }
   return (
@@ -29,7 +26,7 @@ const buildDateField = (mode, field, state, update) => {
               return (
                 <View>
                   <Text style={styles.text}>
-                    {field.label}: {formatDate(state[field.key])}
+                    Posted by: {author.name}
                   </Text>
                 </View>
               );
@@ -47,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default buildDateField;
+export default buildAuthorField;

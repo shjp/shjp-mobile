@@ -25,9 +25,24 @@ const Event = {
       errorKey: 'nameError'
     },
     {
-      key: 'date',
-      label: 'Event Date',
+      key: 'author',
+      label: 'Event Author',
+      type: 'author'
+    },
+    {
+      key: 'start',
+      label: 'Start',
       type: 'date',
+    },
+    {
+      key: 'end',
+      label: 'End',
+      type: 'date'
+    },
+    {
+      key: 'deadline',
+      label: 'Deadline',
+      type: 'date'
     },
     {
       key: 'description',
