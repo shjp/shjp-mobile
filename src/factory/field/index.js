@@ -9,6 +9,7 @@ import buildJoinField from './buildJoinField';
 import buildRolePillField from './buildRolePillField';
 import buildShortText from './buildShortText';
 import buildAuthorField from './buildAuthorField';
+import buildRSVPField from './buildRSVPField';
 
 const buildField = (mode, field, state, update) => {
   switch (field.type) {
@@ -23,6 +24,7 @@ const buildField = (mode, field, state, update) => {
     case 'join':         return buildJoinField(mode, field, state, update);
     case 'role-pill':    return buildRolePillField(mode, field, state, update);
     case 'author':       return buildAuthorField(mode, field, state, update);
+    case 'rsvp':         return buildRSVPField(mode, field, state, update);
   }
 };
 

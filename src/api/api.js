@@ -4,6 +4,7 @@ import { LOCAL_URL, DEV_URL } from 'react-native-dotenv';
 const URL = DEV_URL;
 
 export const post = async (path, payload, headers) => {
+  console.log(`[Request:POST] ${path} | ${JSON.stringify(payload)} | ${JSON.stringify(headers)}`);
   try {
     const resp = await fetch(`${URL}/${path}`, {
       method: 'POST',
@@ -14,7 +15,7 @@ export const post = async (path, payload, headers) => {
       mode: 'cors',
       body: JSON.stringify(payload)
     });
-    console.log(JSON.stringify(resp, null, 2));
+    console.log(`[Response:POST] ${path} | ${JSON.stringify(resp)}`);
     return resp.json();
   } catch (e) {
     console.log(JSON.stringify(e));
@@ -24,6 +25,7 @@ export const post = async (path, payload, headers) => {
 
 export const get = async (path, params, headers) => {
   const url = formatQueryParams(`${URL}/${path}`, params);
+  console.log(`[Request:GET] ${url} | ${JSON.stringify(headers)}`);
   try {
     const resp = await fetch(url, {
       method: 'GET',
@@ -34,7 +36,7 @@ export const get = async (path, params, headers) => {
       mode: 'cors',
       cache: 'default'
     });
-    console.log(`get: ${JSON.stringify(resp, null, 2)}`);
+    console.log(`[Response:GET] ${url} | ${JSON.stringify(resp)}`);
     return resp.json();
   } catch (e) {
     console.log(`Get failed: ${JSON.stringify(e, null, 2)}`);

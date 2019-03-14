@@ -94,8 +94,9 @@ export const editGroup = ({ name, description, imageData }) =>
   console.error('editGroup not implemented yet');
 
 export const changeGroupMembership = ({ groupId, userId, roleId, status }) => {
-  return dispatch =>
-    mutate(`
+  return (dispatch, getState) => {
+    const { accessToken } = getState().user;
+    return mutate(`
       requestGroupJoin(
         group_id: "${groupId}"
         user_id: "${userId}"
@@ -104,10 +105,11 @@ export const changeGroupMembership = ({ groupId, userId, roleId, status }) => {
       ) {
         ref_id
       }
-    `)
+    `, accessToken)
     .then(res => {
       if (res.errors && res.errors.length) {
         return Promise.reject(res.errors);
       }
     });
+  };
 }

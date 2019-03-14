@@ -39,7 +39,8 @@ class NewsView extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.news = mergeNewsEntities(props.announcements, props.events);
+    this.news = mergeNewsEntities(props.announcements, props.events)
+      .sort((a, b) => a.created < b.created ? 1 : -1);
   }
 
   navigateToNews(news) {

@@ -4,6 +4,7 @@ import { query, mutate } from '../api/graphql';
 export const GET_EVENT = "GET_EVENT";
 export const GET_EVENTS = "GET_EVENTS";
 export const CREATE_EVENT = "CREATE_EVENT";
+export const UPDATE_RSVP = "UPDATE_RSVP";
 
 // Actions
 export const getEvents = () =>
@@ -18,7 +19,8 @@ export const getEvents = () =>
         deadline,
         allow_maybe,
         location,
-        location_description
+        location_description,
+        created
       }`
     ).then(res =>
       dispatch({
@@ -48,6 +50,13 @@ export const getEventDetails = (id) => {
         location_description,
         author {
           name
+        },
+        rsvps {
+          user {
+            id
+            name
+          }
+          rsvp
         }
       }`
     ).then(res => {
@@ -90,5 +99,36 @@ export const createEvent = ({ name, description }) => {
     });
 }
 
-export const editEvent = () =>
-  console.error('editEvent not implemented yet');
+export const editEvent = () => (
+  console.error('editEvent not implemented yet')
+);
+
+export const updateRSVP = ({ userId, eventId, rsvp }) => {
+  return (dispatch, getState) => {
+    const { accessToken } = getState().user;
+    return mutate(`
+      updateRsvp(
+        user_id: "${userId}"
+        event_id: "${eventId}"
+        rsvp: "${rsvp}"
+      ) {
+        ref_id
+      }
+    `, accessToken)
+    .then(res => {
+      if (res.errors && res.errors.length) {
+        return Promise.reject(res.errors);
+      }
+      dispatch({
+        type: UPDATE_RSVP,
+        result: res.data.updateRsvp.ref_id
+      });
+    })
+    .catch(e => {
+      dispatch({
+        type: UPDATE_RSVP,
+        error: e
+      });
+    });
+  };
+}

@@ -10,7 +10,11 @@ const Event = {
   key: 'event',
   label: 'Event',
   labelPlural: 'Events',
-  mapStateToProps: state => ({ current: state.event.current }),
+  mapStateToProps: state => ({
+    current: Object.assign({},
+      state.event.current
+    )
+  }),
   actions: {
     create: createEvent,
     edit: editEvent,
@@ -61,6 +65,11 @@ const Event = {
       label: 'Event Location Description',
       type: 'longtext',
       errorKey: 'locationDescriptionError'
+    },
+    {
+      key: 'rsvp',
+      label: 'RSVP to this event',
+      type: 'rsvp'
     }
   ]
 };

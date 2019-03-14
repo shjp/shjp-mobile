@@ -14,7 +14,7 @@ const JoinField = connect(
   state => ({ groupId:  state.group.current && state.group.current.id }),
   { changeGroupMembership, getGroupDetails, showSnackbar }
 )(
-  class JoinField extends Component {
+  class extends Component {
     constructor(props) {
       super(props);
     }
