@@ -16,7 +16,7 @@ class GroupsView extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Groups',
-    headerRight: <ResourceControlButton navigation={navigation} link='GroupCreate' icon='plus' />,
+    //headerRight: <ResourceControlButton navigation={navigation} link='GroupCreate' icon='plus' />,
     ...baseNavigationOptions
   });
 

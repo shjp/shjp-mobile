@@ -16,6 +16,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import { isNil } from 'lodash';
 
 import { clearRegisterForm, emailRegister, updateRegisterForm } from '../../actions/me';
+import { showSnackbar } from '../../actions/ui';
 
 class RegisterHelperView extends Component {
 
@@ -32,7 +33,7 @@ class RegisterHelperView extends Component {
     };
   }
 
-  formatDate = date => !date ? 'Pick a date' : `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+  formatDate = date => !date ? 'Pick a date' : `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
 
   isFormEmpty = () =>
     !this.props.baptismalName
@@ -45,7 +46,7 @@ class RegisterHelperView extends Component {
   };
 
   onFeastdayPicked = feastday => {
-    this.props.updateRegisterForm({ feastday});
+    this.props.updateRegisterForm({ feastday });
     this.setState(() => ({ feastdayPickerVisible: false }));
   };
 
@@ -54,6 +55,8 @@ class RegisterHelperView extends Component {
   submit = () => {
     this.props.emailRegister().then(() => {
       this.props.clearRegisterForm();
+      this.props.showSnackbar({ textMessage: 'You have been registered.', autoHidingTime: 5000 });
+      this.props.navigation.navigate('EmailLoginView');
     });
   };
 
@@ -219,5 +222,5 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => ({ ...state.signup }),
-  { clearRegisterForm, emailRegister, updateRegisterForm }
+  { clearRegisterForm, emailRegister, updateRegisterForm, showSnackbar }
 )(RegisterHelperView);

@@ -12,7 +12,7 @@ export const getUsers = () =>
         id
         name
         email
-        baptismalName
+        baptismal_name
         birthday
         feastday
       }`
@@ -36,7 +36,7 @@ export const getUserDetails = (id) =>
         id
         name
         email
-        baptismalName
+        baptismal_name
         birthday
         feastday
       }`

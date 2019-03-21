@@ -29,7 +29,7 @@ const User = {
       type: 'longtext',
     },
     {
-      key: 'baptismalName',
+      key: 'baptismal_name',
       label: 'Baptismal Name',
       type: 'longtext'
     },

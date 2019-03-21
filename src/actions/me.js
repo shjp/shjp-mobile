@@ -43,7 +43,7 @@ export const getMe = () => (
         accountType
         name
         email
-        baptismalName
+        baptismal_name
         birthday
         feastday
         groups {
@@ -78,9 +78,9 @@ export const clearRegisterForm = () => (
 export const emailRegister = () => (
   (dispatch, getState) => {
     const { name, email, password, baptismalName, birthday, feastday } = getState().signup;
-    const baptismalNameField = baptismalName ? `baptismalName: ${baptismalName},` : '';
-    const birthdayField = birthday ? `birthday: ${birthday},` : '';
-    const feastdayField = feastday ? `feastday: ${feastday},` : '';
+    const baptismalNameField = baptismalName ? `baptismal_name: "${baptismalName}",` : '';
+    const birthdayField = birthday ? `birthday: "${birthday.toISOString()}",` : '';
+    const feastdayField = feastday ? `feastday: "${feastday.toISOString()}",` : '';
     return mutate(`
       createUser(
         name: "${name}",

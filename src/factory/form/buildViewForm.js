@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { baseNavigationOptions } from '../../configs/navigationOptions';
+import NavigateBackButton from '../../components/common/NavigateBackButton';
 import ResourceControlButton from '../../components/common/ResourceControlButton';
 import { FORM_VIEW } from '../modes';
 import BaseResourceForm from './BaseResourceForm';
@@ -17,7 +18,8 @@ const buildViewForm = model => {
 
       static navigationOptions = ({ navigation }) => ({
         headerTitle: `${model.label}`,
-        headerRight: <ResourceControlButton navigation={navigation} link={`${model.label}Edit`} icon='pencil' />,
+        //headerRight: <ResourceControlButton navigation={navigation} link={`${model.label}Edit`} icon='pencil' />,
+        //headerRight: <NavigateBackButton navigation={navigation} />,
         ...baseNavigationOptions
       });
 

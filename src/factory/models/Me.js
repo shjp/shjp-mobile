@@ -22,19 +22,19 @@ const Me = {
       type: 'longtext',
     },
     {
-      key: 'baptismalName',
+      key: 'baptismal_name',
       label: 'Baptismal Name',
       type: 'longtext'
     },
     {
       key: 'birthday',
       label: 'Birthday',
-      type: 'longtext'
+      type: 'date'
     },
     {
       key: 'feastday',
       label: 'Feast Day',
-      type: 'longtext'
+      type: 'date'
     }
   ]
 };
