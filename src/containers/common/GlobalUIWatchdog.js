@@ -25,7 +25,7 @@ class GlobalUIWatchdog extends Component {
               styles.splashContainer}>
               <Image
                 style={styles.splash}
-                source={require('../../../res/animation.gif')}
+                source={require('../../../res/splash.gif')}
                 resizeMode='stretch'/>
             </View>
           :
