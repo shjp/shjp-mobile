@@ -4,7 +4,7 @@ import {
   CREATE_GROUP,
   GET_GROUP,
   GET_GROUPS
-} from '../actions/group';
+} from '../actions/types';
 
 const getDefaultState = () => ({
   groups: [],

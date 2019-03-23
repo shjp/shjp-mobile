@@ -3,7 +3,7 @@ import {
   CREATE_EVENT,
   GET_EVENT,
   GET_EVENTS
-} from '../actions/event';
+} from '../actions/types';
 
 const getDefaultState = () => ({
   events: [],

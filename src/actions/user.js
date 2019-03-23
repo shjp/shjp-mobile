@@ -1,13 +1,13 @@
 import { query, mutate } from '../api/graphql';
+import {
+  GET_USER,
+  GET_USERS,
+} from './types';
+import { withSplash } from './middlewares';
 
-// Action Types
-export const GET_USER = "GET_USER";
-export const GET_USERS = "GET_USERS";
-
-// Actions
-export const getUsers = () =>
-  dispatch =>
-    query(`
+export const getUsers = () => {
+  return withSplash(dispatch => {
+    return query(`
       users {
         id
         name
@@ -25,11 +25,14 @@ export const getUsers = () =>
       dispatch({
         type: GET_USERS,
         error: e
-      }));
+      })
+    );
+  });
+};
 
-export const getUserDetails = (id) =>
-  dispatch =>
-    query(`
+export const getUserDetails = (id) => {
+  return withSplash(dispatch => {
+    return query(`
       user(
         id: "${id}"
       ) {
@@ -49,7 +52,10 @@ export const getUserDetails = (id) =>
       dispatch({
         type: GET_USER,
         error: e
-      }));
+      })
+    );
+  });
+};
 
 export const createUser = ({}) =>
   console.error('createUser not implemented yet');

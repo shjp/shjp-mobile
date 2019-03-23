@@ -1,7 +1,7 @@
 import {
   CLEAR_REGISTER_FORM,
   UPDATE_REGISTER_FORM
-} from '../actions/me';
+} from '../actions/types';
 
 const getDefaultState = () => ({
   name: '',

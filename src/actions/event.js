@@ -1,15 +1,15 @@
 import { query, mutate } from '../api/graphql';
+import {
+  GET_EVENT,
+  GET_EVENTS,
+  CREATE_EVENT,
+  UPDATE_RSVP,
+} from './types';
+import { withSplash } from './middlewares';
 
-// Action Types
-export const GET_EVENT = "GET_EVENT";
-export const GET_EVENTS = "GET_EVENTS";
-export const CREATE_EVENT = "CREATE_EVENT";
-export const UPDATE_RSVP = "UPDATE_RSVP";
-
-// Actions
-export const getEvents = () =>
-  dispatch =>
-    query(`
+export const getEvents = () => {
+  return withSplash(dispatch => {
+    return query(`
       events {
         id,
         name,
@@ -31,11 +31,14 @@ export const getEvents = () =>
       dispatch({
         type: GET_EVENTS,
         error: e
-      }));
+      })
+    );
+  });
+};
 
 export const getEventDetails = (id) => {
-  return dispatch =>
-    query(`
+  return withSplash(dispatch => {
+    return query(`
       event(
         id: "${id}"
       ) {
@@ -71,11 +74,12 @@ export const getEventDetails = (id) => {
         error: e
       });
     });
+  });
 };
 
 export const createEvent = ({ name, description }) => {
-  return dispatch =>
-    mutate(`
+  return withSplash(dispatch => {
+    return mutate(`
       createEvent(
         name: "${name}"
         description: "${description}"
@@ -97,14 +101,15 @@ export const createEvent = ({ name, description }) => {
         error: e
       });
     });
-}
+  });
+};
 
 export const editEvent = () => (
   console.error('editEvent not implemented yet')
 );
 
 export const updateRSVP = ({ userId, eventId, rsvp }) => {
-  return (dispatch, getState) => {
+  return withSplash((dispatch, getState) => {
     const { accessToken } = getState().user;
     return mutate(`
       updateRsvp(
@@ -130,5 +135,5 @@ export const updateRSVP = ({ userId, eventId, rsvp }) => {
         error: e
       });
     });
-  };
+  });
 }

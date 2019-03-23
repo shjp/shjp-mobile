@@ -2,11 +2,11 @@ import { concat } from 'lodash';
 import {
   GET_ME,
   LOGIN
-} from '../actions/me';
+} from '../actions/types';
 import {
   GET_USER,
   GET_USERS
-} from '../actions/user';
+} from '../actions/types';
 
 const getDefaultState = () => ({
   accessToken: null,

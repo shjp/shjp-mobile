@@ -1,14 +1,14 @@
 import { query, mutate } from '../api/graphql';
+import {
+  GET_GROUP,
+  GET_GROUPS,
+  CREATE_GROUP,
+} from './types';
+import { withSplash } from './middlewares';
 
-// Action Types
-export const GET_GROUP = "GET_GROUP";
-export const GET_GROUPS = "GET_GROUPS";
-export const CREATE_GROUP = "CREATE_GROUP";
-
-// Actions
-export const getGroups = () => (
-  dispatch => (
-    query(`
+export const getGroups = () => {
+  return withSplash(dispatch => {
+    return query(`
       groups {
         id,
         name,
@@ -28,12 +28,12 @@ export const getGroups = () => (
         error: e
       })
     )
-  )
-);
+  });
+};
 
-export const getGroupDetails = (id) => (
-  dispatch => (
-    query(`
+export const getGroupDetails = (id) => {
+  return withSplash(dispatch => {
+    return query(`
       group(
         id: "${id}"
       ) {
@@ -61,13 +61,13 @@ export const getGroupDetails = (id) => (
         type: GET_GROUP,
         error: e
       })
-    )
-  )
-);
+    );
+  });
+};
 
 export const createGroup = ({ name, description, imageData }) => {
-  return dispatch =>
-    mutate(`
+  return withSplash(dispatch => {
+    return mutate(`
       createGroup(
         name: "${name}"
         description: "${description}"
@@ -88,13 +88,14 @@ export const createGroup = ({ name, description, imageData }) => {
         error: e
       })
     });
+  });
 };
 
 export const editGroup = ({ name, description, imageData }) =>
   console.error('editGroup not implemented yet');
 
 export const changeGroupMembership = ({ groupId, userId, roleId, status }) => {
-  return (dispatch, getState) => {
+  return withSplash((dispatch, getState) => {
     const { accessToken } = getState().user;
     return mutate(`
       requestGroupJoin(
@@ -111,5 +112,5 @@ export const changeGroupMembership = ({ groupId, userId, roleId, status }) => {
         return Promise.reject(res.errors);
       }
     });
-  };
+  });
 }

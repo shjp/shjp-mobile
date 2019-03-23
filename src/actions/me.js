@@ -1,15 +1,15 @@
 import { query, mutate } from '../api/graphql';
+import {
+  CLEAR_REGISTER_FORM,
+  CREATE_EMAIL_USER,
+  GET_ME,
+  LOGIN,
+  UPDATE_REGISTER_FORM,
+} from './types';
+import { withSplash } from './middlewares';
 
-// Action Types
-export const CLEAR_REGISTER_FORM = "CLEAR_REGISTER_FORM";
-export const CREATE_EMAIL_USER = "CREATE_EMAIL_USER";
-export const GET_ME = "GET_ME";
-export const LOGIN = "LOGIN";
-export const UPDATE_REGISTER_FORM = "UPDATE_REGISTER_FORM";
-
-// Actions
-export const emailLogin = (email, password) => (
-  dispatch => {
+export const emailLogin = (email, password) => {
+  return withSplash(dispatch => {
     return mutate(`
       login(
         accountType: "email",
@@ -31,11 +31,11 @@ export const emailLogin = (email, password) => (
         error: e
       })
     ));
-  }
-);
+  });
+};
 
-export const getMe = () => (
-  (dispatch, getState) => {
+export const getMe = () => {
+  return withSplash((dispatch, getState) => {
     const { accessToken } = getState().user;
     return query(`
       me {
@@ -66,8 +66,8 @@ export const getMe = () => (
         error: e
       });
     });
-  }
-)
+  });
+};
 
 export const clearRegisterForm = () => (
   dispatch => dispatch({
@@ -75,8 +75,8 @@ export const clearRegisterForm = () => (
   })
 );
 
-export const emailRegister = () => (
-  (dispatch, getState) => {
+export const emailRegister = () => {
+  return withSplash((dispatch, getState) => {
     const { name, email, password, baptismalName, birthday, feastday } = getState().signup;
     const baptismalNameField = baptismalName ? `baptismal_name: "${baptismalName}",` : '';
     const birthdayField = birthday ? `birthday: "${birthday.toISOString()}",` : '';
@@ -101,8 +101,8 @@ export const emailRegister = () => (
         ref: res.data.createUser.ref_id
       });
     });
-  }
-);
+  });
+};
 
 export const updateRegisterForm = prop => (
   dispatch => dispatch({

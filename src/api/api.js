@@ -24,6 +24,10 @@ export const post = async (path, payload, headers) => {
 };
 
 export const get = async (path, params, headers) => {
+  // Uncomment below to test long time response time
+  //await new Promise((resolve, reject) => {
+  //  setTimeout(() => resolve(null), 2000);
+  //});
   const url = formatQueryParams(`${URL}/${path}`, params);
   console.log(`[Request:GET] ${url} | ${JSON.stringify(headers)}`);
   try {

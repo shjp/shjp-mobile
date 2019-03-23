@@ -1,11 +1,14 @@
 import { concat } from 'lodash';
 import {
   SHOW_SNACKBAR,
-  HIDE_SNACKBAR
-} from '../actions/ui';
+  HIDE_SNACKBAR,
+  SHOW_SPLASH,
+  HIDE_SPLASH,
+} from '../actions/types';
 
 const getDefaultState = () => ({
-  snackbar: null
+  snackbar: null,
+  splash: null,
 });
 
 const uiReducer = (state = getDefaultState(), action) => {
@@ -14,6 +17,10 @@ const uiReducer = (state = getDefaultState(), action) => {
       return { ...state, snackbar: action.snackbarOptions };
     case HIDE_SNACKBAR:
       return { ...state, snackbar: null };
+    case SHOW_SPLASH:
+      return { ...state, splash: action.splashOptions };
+    case HIDE_SPLASH:
+      return { ...state, splash: null };
     default:
       return state;
   }

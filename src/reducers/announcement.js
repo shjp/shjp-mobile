@@ -3,7 +3,7 @@ import {
   CREATE_ANNOUNCEMENT,
   GET_ANNOUNCEMENT,
   GET_ANNOUNCEMENTS
-} from '../actions/announcement';
+} from '../actions/types';
 
 const getDefaultState = () => ({
   announcements: [],

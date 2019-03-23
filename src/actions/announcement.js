@@ -1,14 +1,14 @@
 import { query, mutate } from '../api/graphql';
+import {
+  GET_ANNOUNCEMENT,
+  GET_ANNOUNCEMENTS,
+  CREATE_ANNOUNCEMENT,
+} from './types';
+import { withSplash } from './middlewares';
 
-// Action Types
-export const GET_ANNOUNCEMENT = "GET_ANNOUNCEMENT";
-export const GET_ANNOUNCEMENTS = "GET_ANNOUNCEMENTS";
-export const CREATE_ANNOUNCEMENT = "CREATE_ANNOUNCEMENT";
-
-// Actions
-export const getAnnouncements = () =>
-  dispatch =>
-    query(`
+export const getAnnouncements = () => {
+  return withSplash(dispatch => {
+    return query(`
       announcements {
         id,
         name,
@@ -23,11 +23,14 @@ export const getAnnouncements = () =>
       dispatch({
         type: GET_ANNOUNCEMENTS,
         error: e
-      }));
+      })
+    );
+  });
+};
 
-export const getAnnouncementDetails = (id) =>
-  dispatch =>
-    query(`
+export const getAnnouncementDetails = (id) => {
+  return withSplash(dispatch => {
+    return query(`
       announcement(
         id: "${id}"
       ) {
@@ -47,11 +50,14 @@ export const getAnnouncementDetails = (id) =>
       dispatch({
         type: GET_ANNOUNCEMENT,
         error: e
-      }));
+      })
+    );
+  });
+};
 
 export const createAnnouncement = ({ name, content }) => {
-  return dispatch =>
-    mutate(`
+  return withSplash(dispatch => {
+    return mutate(`
       createAnnouncement(
         name: "${name}"
         content: "${content}"
@@ -73,6 +79,7 @@ export const createAnnouncement = ({ name, content }) => {
         error: e
       })
     });
+  });
 };
 
 export const editAnnouncement = () =>

@@ -1,6 +1,9 @@
-// Action Types
-export const SHOW_SNACKBAR = "SHOW_SNACKBAR";
-export const HIDE_SNACKBAR = "HIDE_SNACKBAR";
+import {
+  HIDE_SNACKBAR,
+  HIDE_SPLASH,
+  SHOW_SNACKBAR,
+  SHOW_SPLASH,
+} from './types';
 
 export const showSnackbar = (options) => (
   dispatch => {
@@ -23,3 +26,20 @@ export const hideSnackbar = () => (
     })
   )
 );
+
+export const showSplash = ({ transparent = true }) => {
+  return dispatch => {
+    dispatch({
+      type: SHOW_SPLASH,
+      splashOptions: { transparent },
+    });
+  };
+};
+
+export const hideSplash = () => {
+  return dispatch => {
+    dispatch({
+      type: HIDE_SPLASH
+    });
+  }
+};
