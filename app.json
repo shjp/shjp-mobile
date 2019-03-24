@@ -27,11 +27,6 @@
     },
     "android": {
       "package": "com.shjp.shjp",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyBN3DRmVWa8kXOR_OF7y0rY_ldfWOSpicA"
-        }
-      },
       "permissions": []
     }
   }
