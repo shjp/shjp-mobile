@@ -4,14 +4,13 @@ import {
   getEventDetails,
   getEvents
 } from '../../actions/event';
-import * as mode from '../modes';
 ;
 const Event = {
   key: 'event',
   label: 'Event',
   labelPlural: 'Events',
   mapStateToProps: state => ({
-    current: Object.assign({},
+    current: state.event.current && Object.assign({},
       state.event.current
     )
   }),

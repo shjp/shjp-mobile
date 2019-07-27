@@ -4,7 +4,6 @@ import {
   getUserDetails,
   getUsers
 } from '../../actions/user';
-import * as mode from '../modes';
 
 const User = {
   key: 'user',

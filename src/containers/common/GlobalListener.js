@@ -3,11 +3,25 @@ import { connect } from 'react-redux';
 import { Image, StyleSheet, View } from 'react-native';
 import SnackBar from 'react-native-snackbar-component'
 
-import { showSnackbar, hideSnackbar } from '../../actions/ui';
+import { loadAccessToken, getMe } from '../../actions/me';
+import { showOverlayMenu, showSnackbar, hideSnackbar } from '../../actions/ui';
+import OverlayMenu from '../../containers/common/OverlayMenu';
 
-class GlobalUIWatchdog extends Component {
+class GlobalListener extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this._loadMe();
+  }
+
+  _loadMe() {
+    return this.props.loadAccessToken().then(() => {
+      if (this.props.accessToken) {
+        this.props.getMe();
+      }
+    });
   }
 
   render() {
@@ -19,7 +33,12 @@ class GlobalUIWatchdog extends Component {
           accentColor="green"
           actionHandler={() => this.props.hideSnackbar()}/>
         {
-          this.props.splashOptions ?
+          this.props.overlayMenu && (
+            <OverlayMenu/>
+          )
+        }
+        {
+          this.props.splashOptions && (
             <View style={this.props.splashOptions.transparent ?
               [styles.splashContainer, styles.splashContainerTransparent] :
               styles.splashContainer}>
@@ -28,8 +47,7 @@ class GlobalUIWatchdog extends Component {
                 source={require('../../../res/splash.gif')}
                 resizeMode='stretch'/>
             </View>
-          :
-            null
+          )
         }
       </>
     )
@@ -63,10 +81,15 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => ({
+    accessToken: state.user.accessToken,
+    overlayMenu: state.ui.overlayMenu,
     snackbarOptions: state.ui.snackbar,
-    splashOptions: state.ui.splash
+    splashOptions: state.ui.splash,
   }), {
+    loadAccessToken,
+    getMe,
     showSnackbar,
-    hideSnackbar
+    hideSnackbar,
+    showOverlayMenu,
   }
-)(GlobalUIWatchdog);
+)(GlobalListener);

@@ -26,7 +26,7 @@ export default class BaseResourceForm extends Component {
           {
             this.model.fields
               .filter(field => !field.exclude || !field.exclude.includes(this.mode))
-              .map(field => buildField(this.mode, field, Object.assign({}, this.state), (val) => this.setState(val)))
+              .map(field => buildField(this.mode, field, Object.assign({}, this.state.data), (val) => this.setState({ data: val })))
           }
           {
             this.getSubmitComponent()

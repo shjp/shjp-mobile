@@ -20,7 +20,7 @@ const Group = {
   label: 'Group',
   labelPlural: 'Groups',
   mapStateToProps: state => ({
-    current: Object.assign({},
+    current: state.group.current && Object.assign({},
       state.group.current,
       {
         membership: MeInGroup(state.group.current, state.user.me),

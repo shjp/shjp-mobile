@@ -17,7 +17,7 @@ class GroupsView extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Groups',
     //headerRight: <ResourceControlButton navigation={navigation} link='GroupCreate' icon='plus' />,
-    ...baseNavigationOptions
+    ...baseNavigationOptions(navigation)
   });
 
   componentDidMount() {
@@ -28,9 +28,10 @@ class GroupsView extends Component {
     console.log('groups: ', JSON.stringify(props.groups));
   }
 
-  navigateToGroup(id) {
-    this.props.navigation.navigate('GroupView', {
-      id
+  navigateToGroup(id, name) {
+    this.props.navigation.navigate('GroupDetailView', {
+      id,
+      name,
     });
   }
 
@@ -43,7 +44,7 @@ class GroupsView extends Component {
       <ScrollView>
       {
         this.props.groups.map((group, i) =>
-          <TouchableOpacity onPress={() => this.navigateToGroup(group.id)} key={i} activeOpacity={0.6}>
+          <TouchableOpacity onPress={() => this.navigateToGroup(group.id, group.name)} key={i} activeOpacity={0.6}>
             <GroupCard
               name={group.name}
               description={group.description}

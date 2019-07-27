@@ -1,5 +1,3 @@
-import { concat } from 'lodash';
-//import Snackbar from 'react-native-snackbar';
 import {
   CREATE_GROUP,
   GET_GROUP,

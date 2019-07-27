@@ -30,7 +30,7 @@ class NewsView extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'News',
     //headerRight: <ResourceControlButton navigation={navigation} link='EventCreate' icon='plus' />,
-    ...baseNavigationOptions
+    ...baseNavigationOptions(navigation)
   });
 
   componentDidMount() {

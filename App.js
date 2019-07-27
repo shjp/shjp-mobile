@@ -5,7 +5,7 @@ import { Asset, AppLoading, SplashScreen } from 'expo';
 
 import configureStore from './src/store/configure-store';
 import AppNavigator from './src/containers/navigation/AppNavigator';
-import GlobalUIWatchdog from './src/containers/common/GlobalUIWatchdog';
+import GlobalListener from './src/containers/common/GlobalListener';
 
 const store = configureStore();
 
@@ -59,7 +59,7 @@ export default class App extends Component {
       <Provider store={store}>
         <>
           <AppNavigator />
-          <GlobalUIWatchdog />
+          <GlobalListener />
         </>
       </Provider>
     );

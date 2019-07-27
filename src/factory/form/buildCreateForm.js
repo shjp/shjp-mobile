@@ -25,7 +25,7 @@ const buildCreateForm = model => {
       static navigationOptions = ({ navigation }) => ({
         headerTitle: `Create ${model.label}`,
         headerRight: <NavigateBackButton navigation={navigation} />,
-        ...baseNavigationOptions
+        ...baseNavigationOptions(navigation)
       });
     
       constructor(props) {
@@ -47,7 +47,7 @@ const buildCreateForm = model => {
 
       submit() {
         console.log('submit, ', JSON.stringify(this.props, null, 2));
-        this.props.create(this.state).then(() => {
+        this.props.create(this.state.data).then(() => {
           /*Snackbar.show({
             title: `Successfully created ${this.model.label} "${this.state.name}"!`,
             duration: Snackbar.LENGTH_LONG

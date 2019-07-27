@@ -1,4 +1,3 @@
-import { concat } from 'lodash';
 import {
   CREATE_ANNOUNCEMENT,
   GET_ANNOUNCEMENT,

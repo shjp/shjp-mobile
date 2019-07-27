@@ -1,4 +1,3 @@
-import { concat } from 'lodash';
 import {
   CREATE_EVENT,
   GET_EVENT,

@@ -13,8 +13,6 @@ import {
 } from 'react-native-elements'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import { isNil } from 'lodash';
-
 import { clearRegisterForm, emailRegister, updateRegisterForm } from '../../actions/me';
 import { showSnackbar } from '../../actions/ui';
 

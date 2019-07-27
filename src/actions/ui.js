@@ -1,6 +1,8 @@
 import {
+  HIDE_OVERLAY_MENU,
   HIDE_SNACKBAR,
   HIDE_SPLASH,
+  SHOW_OVERLAY_MENU,
   SHOW_SNACKBAR,
   SHOW_SPLASH,
 } from './types';
@@ -42,4 +44,20 @@ export const hideSplash = () => {
       type: HIDE_SPLASH
     });
   }
+};
+
+export const showOverlayMenu = () => {
+  return dispatch => {
+    dispatch({
+      type: SHOW_OVERLAY_MENU,
+    });
+  }
+};
+
+export const hideOverlayMenu = () => {
+  return dispatch => {
+    dispatch({
+      type: HIDE_OVERLAY_MENU,
+    });
+  };
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { showOverlayMenu } from '../../actions/ui';
 import { baseNavigationOptions } from '../../configs/navigationOptions';
 import NavigateBackButton from '../../components/common/NavigateBackButton';
 import ResourceControlButton from '../../components/common/ResourceControlButton';
@@ -11,7 +12,8 @@ const buildViewForm = model => {
   return connect(
     model.mapStateToProps,
     {
-      get: model.actions.get
+      get: model.actions.get,
+      showOverlayMenu,
     }
   )(
     class ResourceViewForm extends BaseResourceForm {
@@ -20,7 +22,7 @@ const buildViewForm = model => {
         headerTitle: `${model.label}`,
         //headerRight: <ResourceControlButton navigation={navigation} link={`${model.label}Edit`} icon='pencil' />,
         //headerRight: <NavigateBackButton navigation={navigation} />,
-        ...baseNavigationOptions
+        ...baseNavigationOptions(navigation)
       });
 
       constructor(props) {
@@ -28,26 +30,32 @@ const buildViewForm = model => {
 
         this.model = model;
         this.mode = FORM_VIEW;
-        this.state = {};
+        this.state = {
+          data: {},
+        };
       }
 
       componentDidMount() {
+        this.props.navigation.setParams({
+          showOverlayMenu: this.props.showOverlayMenu
+        });
+
+        if (this.props.current) {
+          this.setState({ data: this.props.current });
+          return;
+        }
         const id = this.props.navigation.getParam('id', null);
         if (!id) {
-          if (this.props.current) {
-            this.setState(this.props.current);
-          }
           return;
         }
         this.props.get(id)
           .then(() => {
-            console.log(`buildViewForm | props.group: ${JSON.stringify(this.props.current)}`);
-            this.setState(this.props.current);
+            this.setState({ data: this.props.current });
           });
       }
 
       componentWillReceiveProps(newProps) {
-        this.setState(newProps.current);
+        this.setState({ data: newProps.current || {} });
       } 
 
       getSubmitComponent() {

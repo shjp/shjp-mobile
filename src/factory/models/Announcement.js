@@ -4,7 +4,6 @@ import {
   getAnnouncementDetails,
   getAnnouncements
 } from '../../actions/announcement';
-import * as mode from '../modes';
 ;
 const Announcement = {
   key: 'announcement',

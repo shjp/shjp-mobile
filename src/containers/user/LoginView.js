@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AsyncStorage,
   Text,
   View,
   StyleSheet,
@@ -14,18 +13,16 @@ import { connect } from 'react-redux';
 import { SHJPBaseCard } from '../../components/custom/cards';
 import { baseNavigationOptions } from '../../configs/navigationOptions';
 
-import { post } from '../../api/api';
-
 class LoginView extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Login',
-    ...baseNavigationOptions
+    ...baseNavigationOptions(navigation)
   });
 
   componentDidMount() {
     if (this.props.user) {
-      this.props.navigation.navigate('UserView', {
+      this.props.navigation.navigate('ProfileView', {
         id: this.props.user.id
       });
     }

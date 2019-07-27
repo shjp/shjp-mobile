@@ -1,12 +1,28 @@
 import { query, mutate } from '../api/graphql';
+import cache from '../cache';
 import {
   CLEAR_REGISTER_FORM,
   CREATE_EMAIL_USER,
   GET_ME,
+  LOAD_ACCESS_TOKEN,
   LOGIN,
+  LOGOUT,
   UPDATE_REGISTER_FORM,
 } from './types';
 import { withSplash } from './middlewares';
+
+export const loadAccessToken = () => {
+  return dispatch => {
+    return cache.getAccessToken().then(cachedAccessToken => {
+      if (cachedAccessToken) {
+        dispatch({
+          type: LOAD_ACCESS_TOKEN,
+          accessToken: cachedAccessToken,
+        });
+      }
+    });
+  };
+};
 
 export const emailLogin = (email, password) => {
   return withSplash(dispatch => {
@@ -20,6 +36,9 @@ export const emailLogin = (email, password) => {
       }
     `)
     .then(res => {
+      cache.setAccessToken(res.data.login.key).catch(err => {
+        console.warn('Could not store access token in storage, err = ', err);
+      });
       dispatch({
         type: LOGIN,
         accessToken: res.data.login.key
@@ -47,10 +66,20 @@ export const getMe = () => {
         birthday
         feastday
         groups {
+          id
           name
           privilege
           status
           role_name
+          permissions {
+            can_read
+            can_read_members
+            can_read_comments
+            can_write_comments
+            can_write_announcements
+            can_write_events
+            can_edit_users
+          }
         }
       }
     `, accessToken)
@@ -109,4 +138,14 @@ export const updateRegisterForm = prop => (
     type: UPDATE_REGISTER_FORM,
     prop
   })
+);
+
+export const logout = () => (
+  dispatch => {
+    return cache.clearAccessToken().then(() => {
+      dispatch({
+        type: LOGOUT,
+      });
+    });
+  }
 );

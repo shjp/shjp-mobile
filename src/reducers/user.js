@@ -1,9 +1,8 @@
-import { concat } from 'lodash';
 import {
+  LOAD_ACCESS_TOKEN,
+  LOGIN,
+  LOGOUT,
   GET_ME,
-  LOGIN
-} from '../actions/types';
-import {
   GET_USER,
   GET_USERS
 } from '../actions/types';
@@ -21,10 +20,13 @@ const userReducer = (state = getDefaultState(), action) => {
       return { ...state, current: action.user };
     case GET_USERS:
       return { ...state, users: action.users };
+    case LOAD_ACCESS_TOKEN:
     case LOGIN:
       return { ...state, accessToken: action.accessToken };
+    case LOGOUT:
+      return { ...state, accessToken: null, me: null, current: null };
     case GET_ME:
-      return { ...state, me: action.me };
+      return { ...state, me: action.me, current: action.me };
     default:
       return state;
   }

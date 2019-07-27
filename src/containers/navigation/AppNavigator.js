@@ -7,11 +7,11 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { Icon } from 'react-native-elements';
 //import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import {
-  GroupsView,
-  NewsView
-} from '../list';
+import GroupDetailView from '../group/GroupDetailView';
+import GroupsView from '../group/GroupsView';
+import NewsView from '../news/NewsView';
 import LoginView from '../user/LoginView';
+import ProfileView from '../user/ProfileView';
 import EmailLoginView from '../user/EmailLoginView';
 import EmailRegisterView from '../user/EmailRegisterView';
 import RegisterHelperView from '../user/RegisterHelperView';
@@ -29,7 +29,7 @@ const AppNavigator = createMaterialBottomTabNavigator({
   Groups: {
     screen: createStackNavigator({
       GroupsView,
-      GroupView: FormFactory.viewForm(Group),
+      GroupDetailView,
       GroupCreate: FormFactory.createForm(Group),
       GroupEdit: FormFactory.editForm(Group)
     }, {
@@ -61,7 +61,7 @@ const AppNavigator = createMaterialBottomTabNavigator({
       EmailLoginView,
       EmailRegisterView,
       RegisterHelperView,
-      ProfileView: FormFactory.viewForm(Me),
+      ProfileView,
     }, {
       initialRouteName: 'LoginView'
     }),

@@ -26,7 +26,7 @@ const buildEditForm = model => {
       static navigationOptions = ({ navigation }) => ({
         headerTitle: `Edit ${model.label}`,
         headerRight: <NavigateBackButton navigation={navigation} />,
-        ...baseNavigationOptions
+        ...baseNavigationOptions(navigation)
       });
 
       constructor(props) {
@@ -38,7 +38,7 @@ const buildEditForm = model => {
 
       componentDidMount() {
         console.log('current = ', JSON.stringify(this.props.current));
-        this.setState(this.props.current);
+        this.setState({ data: this.props.current });
       }
 
       getSubmitComponent() {
@@ -53,7 +53,7 @@ const buildEditForm = model => {
 
       submit() {
         console.log('SUBMIT, ', JSON.stringify(this.props));
-        this.props.edit(this.state).then(() => {
+        this.props.edit(this.state.data).then(() => {
           /*Snackbar.show({
             title: `Successfully edited ${this.model.label} "${this.state.name}"!`,
             duration: Snackbar.LENGTH_LONG
